@@ -1,0 +1,113 @@
+<div class="flex flex-1 flex-column gap-2">
+    <p-card header="Expense Management" styleClass="text-center flex justify-content-center bg-purple-300">
+        <form [formGroup]="expenseform" class="w-full flex" (ngSubmit)="addExpense()">
+        <div class="flex flex-column md:flex-row gap-2">
+            <div class="field align-items-center">                
+                <input type="number" class="w-full" pInputText name="amount" formControlName="amount" placeholder="Enter Amount" required/>
+            </div> 
+                   
+            <div class="field align-items-center">
+                <input type="text" class="w-full" pInputText name="desc" formControlName="description" placeholder="Enter Description"/>
+            </div>
+
+            <div class="field align-items-center">
+                <p-calendar formControlName="date" placeholder="DD-MM-YYYY" dateFormat="dd-mm-yy" [maxDate]="maxDate" [showIcon]="true" [required]="true" ></p-calendar>
+            </div>
+
+            <div class="field align-items-center">
+                <p-dropdown styleClass="w-full" formControlName="selectedCategory" [options]="categories" optionLabel="categoryName" placeholder="Select a Category" [required]="true"></p-dropdown>
+            </div>
+            <div>
+                <p-button label="Add Expense" type="submit" [loading]="isloading" [disabled]="!expenseform.valid" styleClass="w-full"></p-button>
+            </div>
+        </div>        
+</form>
+
+    </p-card>
+    <p-card subheader="Expenses">
+        <p-table [value]="expenses" dataKey="id" [scrollable]="true" scrollHeight="290px" [tableStyle]="{'width': '100%'}" styleClass="p-datatable-striped p-datatable-sm">
+
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width:5%">Sr.no</th>
+                    <th style="width:10%">Amount</th>
+                    <th style="width:25%">Description</th>
+                    <th style="width:20%">Category</th>
+                    <th style="width:10%">Date</th>
+                    <th style="width:20%">Actions</th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-expense let-i="rowIndex"  >
+                <tr>
+                    <td>{{i+1}}</td>
+                    <!-- pipe for rs -->
+                    <td>{{expense.amount | currency:'INR' }}</td>
+                    <td>{{expense.description | titlecase}}</td>
+                    <td>{{expense.categoryId?.categoryName | titlecase}}</td>
+                    <td>{{expense.date|date}}</td>
+                    <td>
+                        <!-- <app-editexpense [Eid]="1"></app-editexpense> -->
+                        <span class="p-buttonset">
+                            <p-button pRipple (click)="showDialog1(i)" label="Edit" icon="pi pi-pencil" size="small"></p-button>
+                            <p-button pRipple (click)="showDialog2(i)" label="Delete" icon="pi pi-trash" size="small" severity="danger"></p-button>
+                        </span>
+                    </td>
+                </tr>
+
+            </ng-template>
+        </p-table>
+
+    </p-card>
+</div>
+
+
+
+<!-- modals -->
+<!-- update -->
+<p-dialog [(visible)]="visible1" [modal]="true" header="Edit Expense">
+    <ng-template pTemplate="headless">
+        <form action="" [formGroup]="expenseUpdateform" >
+            <div class="flex flex-column px-8 py-5 gap-4 bg-purple-500" style="border-radius: 12px;">
+                <h3>Update Expense {{Eid+1}}</h3>
+                <div class="p-fluid ">
+                    <!-- add row gap between all divs -->
+                    <div class="p-field py-2">
+                      <label for="Amount">Amount</label>                        
+                      <input id="Amount" type="number" class="w-full" pInputText formControlName="amount" placeholder="Enter Amount" required/> 
+                    </div>                    
+                    <div class="p-field py-2">
+                      <label for="Description">Description</label>
+                      <input id="Description" type="text" class="w-full" pInputText formControlName="description" placeholder="Enter Description"/>
+                    </div>
+                    <div class="p-field py-2">
+                      <label for="Date">Date</label>
+                      <p-calendar id="Date" formControlName="date" placeholder="DD-MM-YYYY" dateFormat="dd-mm-yy" [maxDate]="maxDate" [showIcon]="true" [required]="true" ></p-calendar>
+                    </div>
+                    <div class="p-field py-2">
+                      <label for="Category">Category</label>
+                      <p-dropdown id="Category" styleClass="w-full" formControlName="selectedCategory" [options]="categories" optionLabel="categoryName" placeholder="Select a Category" [required]="true"></p-dropdown>
+                    </div> 
+                  </div>
+
+                <div class="flex align-items-center gap-2">                    
+                    <p-button label="Update Expense" [disabled]="!(expenseUpdateform.valid && expenseUpdateform.dirty)" (click)="updateExpense()" [text]="true" styleClass="w-full text-primary-50 border-1 border-white-alpha-30 bg-green-400 hover:bg-green-500" class="w-full" ></p-button>
+                    <p-button label="Cancel" (click)="closeDialog1()" [text]="true"  styleClass="w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10" class="w-full"></p-button>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+</p-dialog>
+
+<!-- delete -->
+<p-dialog [modal]="true" [(visible)]="visible2" header="Confirm Deletion">
+    <ng-template pTemplate="headless">
+        <div class="flex flex-column px-8 py-5 gap-4" style="border-radius: 12px; background-image: radial-gradient(circle at left top, var(--primary-400), var(--primary-700))">
+            <h1>Delete Expense With SR.No : <b class="text-red-700 underline">{{Eid+1}}</b></h1>
+            <div class="flex align-items-center gap-2">
+                <p-button label="Confirm Delete" (click)="deleteExpense()" [text]="true" styleClass="w-full text-primary-50 border-1 border-white-alpha-30  bg-red-500 hover:bg-red-600"  class="w-full" ></p-button>
+                <p-button label="Cancel" (click)="closeDialog2()" [text]="true"  styleClass="w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10" class="w-full"></p-button>
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>

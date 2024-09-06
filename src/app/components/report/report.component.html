@@ -1,0 +1,11 @@
+<p-card header="Reports" styleClass="text-center">
+    <p-tabView>
+        <p-tabPanel *ngFor="let tab of tabs"  [header]="tab.title">
+            <ng-template ngIf="tab.content">
+                <p class="bg-red-300 p-1 border-round">
+                    <ng-container *ngComponentOutlet="tab.content"></ng-container>
+                </p>
+            </ng-template>
+        </p-tabPanel>
+        </p-tabView>
+</p-card>

@@ -1,0 +1,60 @@
+<p-card styleClass="border-solid bg-purple-300">
+    <div class="grid xs:grid-template-columns-1 md:grid-template-columns-4 gap-4">
+       
+        <div class="col">
+            <p-card header="Total Money Spent Today" styleClass="border-solid h-full bg-purple-100 border-purple-500">
+                <ng-template pTemplate="content">
+                    <p class="text-lg">
+                        {{totalToday|currency:'INR'}}
+                    </p>
+                </ng-template>
+            </p-card>
+        </div>
+    
+        <div class="col">
+            <p-card header="Total Money Spent This Month" styleClass="border-solid h-full bg-purple-100 border-purple-500">
+                <p class="text-lg ">
+                    {{totalMonth|currency:'INR'}}
+                </p>        
+            </p-card>
+        </div>
+    
+        <div class="col">
+            <p-card header="Total Money Spent This Year" styleClass="border-solid h-full bg-purple-100 border-purple-500">
+
+                <p class="text-lg ">
+                    {{totalYear|currency:'INR'}}
+                </p>
+            </p-card>
+        </div>
+        
+        <div class="col">
+            <p-card header="Total Money Spent Till" styleClass="border-solid h-full bg-purple-100 border-purple-500">
+                <p class="text-lg">
+                    {{totalTill|currency:'INR'}}
+                </p>
+            </p-card>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="flex gap-4 mb-2 justify-content-center">
+        <div class="flex-1">
+            <p-card header="Category Wise"  styleClass=" text-center border-solid h-full flex flex-1 justify-content-center">
+                <ng-template pTemplate="content">
+                    <p-chart type="pie" [data]="data" [options]="options"></p-chart>
+                </ng-template>
+            </p-card>
+        </div>
+
+        <!-- <div class="flex-1">
+            <p-card header="This Year" styleClass="border-solid h-full flex flex-1 justify-content-center align-content-end">
+                <ng-template pTemplate="content">
+                    <p-chart type="bar" [data]="data" [options]="options"></p-chart>
+                </ng-template>
+            </p-card>
+        </div> -->
+    </div>
+</p-card>
+

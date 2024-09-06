@@ -1,0 +1,26 @@
+<div class="min-h-20rem  flex flex-column md:flex-row md:mt-8 mt-6 justify-content-center align-items-center gap-6">
+    <p-card>
+        <p>
+            {{'If already User please login.' | titlecase}}
+        </p>
+        <ng-template pTemplate="footer">
+            <div class="flex justify-content-center">
+                <a routerLink="/login">
+                    <p-button label="LogIn"></p-button>
+                </a>
+            </div>
+        </ng-template>
+    </p-card>
+    <p-card>
+        <p>
+            {{'If new User please Register.' | titlecase}}
+        </p>
+        <ng-template pTemplate="footer">
+            <div class="flex justify-content-center">
+                <a href="/register">
+                    <p-button label="Register"></p-button>
+                </a>
+            </div>
+        </ng-template>
+    </p-card>
+</div>

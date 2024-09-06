@@ -1,0 +1,51 @@
+<p-card>
+    <ng-template pTemplate="content">
+      <div class="grid" *ngIf="isDataAvailable">
+        <div class="col-12 md:col-4 p-2 border-round">
+            <div class="card border-solid border-round"> 
+                <p-chart type="pie" [data]="piedata" [height]="'400px'" [options]="pieoptions"></p-chart>
+            </div>
+        </div>
+
+        <div class="col-12 md:col-8 p-2 border-round">
+            <div class="card border-solid border-round"> 
+
+              <p-table [value]="tabledatalocal"  [paginator]="true"
+              [rows]="5"
+              [showCurrentPageReport]="true"  [tableStyle]="{'min-width': '50rem'}"   styleClass="p-datatable-gridlines p-datatable-lg p-datatable-striped">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>SR.NO</th>
+                    <th pSortableColumn="amount"  >Amount <p-sortIcon field="amount"></p-sortIcon> </th>
+                    <th pSortableColumn="categoryName" >Category  <p-sortIcon field="categoryName"></p-sortIcon></th>
+                    <th>Description</th>
+                    <th pSortableColumn="date"  >Date <p-sortIcon field="date"></p-sortIcon></th>
+                  </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-rowData let-i="rowIndex">
+                  <tr>
+                    <td>{{i+1}}</td>
+                    <td>{{rowData.amount | currency:"INR"}}</td>
+                    <td>{{rowData.categoryName | titlecase}}</td>
+                    <td>{{rowData.description | titlecase}}</td>
+                    <td>{{rowData.date | date}}</td>                    
+                  </tr>
+              </ng-template>
+              </p-table>
+
+            </div>
+        </div>
+
+      </div>
+
+      <div class="grid" *ngIf="!isDataAvailable">
+        <div class="col-12 p-2 border-round">
+            <div class="card border-solid border-round"> 
+                <h3 class="text-center">No Data Available</h3>
+            </div>
+        </div>
+      </div>
+      
+    </ng-template>
+</p-card>

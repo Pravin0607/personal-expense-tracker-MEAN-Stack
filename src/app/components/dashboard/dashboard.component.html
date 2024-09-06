@@ -1,0 +1,23 @@
+<div>
+    <div class="card flex ">
+        <p-sidebar [(visible)]="sidebarVisible" styleClass="bg-purple-200" styleClass="w-15rem">
+            <ng-template pTemplate="header">
+                    <h3>Menu</h3>
+            </ng-template>
+            <ng-template pTemplate="body">
+                <div class="flex w-full flex-column gap-2">
+                        <button pButton pRipple routerLink="/home"  routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" label="Dashboard" styleClass="w-full"></button>
+                        <button pButton pRipple routerLink="expense" routerLinkActive="active" label="Expense" styleClass="w-full"></button>
+                        <button pButton pRipple routerLink="category" routerLinkActive="active" label="Category" styleClass="w-full"></button>
+                        <button pButton pRipple routerLink="report" routerLinkActive="active" label="Report" styleClass="w-full"></button>
+                        <button pButton pRipple routerLink="profile" routerLinkActive="active" label="Profile" styleClass="w-full"></button>
+                </div>
+                </ng-template>
+            <ng-template pTemplate="footer">
+                <p-button (onClick)="logOut()" severity="danger" >Log Out</p-button>
+            </ng-template>
+        </p-sidebar>
+        <p-button (click)="sidebarVisible = true" class="md:fixed md:top-0 md:ml-1 md:mt-5" label="Navbar" icon="pi pi-th-large"></p-button>
+    </div>
+    <router-outlet></router-outlet>
+</div>

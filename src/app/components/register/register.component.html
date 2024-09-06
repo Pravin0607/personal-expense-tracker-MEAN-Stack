@@ -1,0 +1,91 @@
+<form [formGroup]="registerForm" class="flex min-h-30rem justify-content-center align-items-center" (ngSubmit)="submitDetails()">
+    <p-card header="Registration Form"  [style]="{ width: '360px',}" styleClass="md:w-12">
+
+        <div class="md:flex md:gap-4">
+        <div class="field">
+            <label for="firstName">First Name  </label>
+            <input type="text" class="w-full" pInputText name="firstName" formControlName="firstName" placeholder="Enter Your First Name" maxlength="20"/>
+            <small *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="p-error">
+                <div *ngIf="firstName.errors?.['required']">
+                    First Name is Required.
+                </div>
+            </small>
+        </div>
+
+        <div class="field">
+            <label for="lastName">Last Name  </label>
+            <input type="text" class="w-full" pInputText name="lastName" formControlName="lastName" placeholder="Enter Your Last Name" maxlength="20"/>
+            <small *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="p-error">
+                <div *ngIf="lastName.errors?.['required']">
+                    Last Name is Required.
+                </div>
+            </small>
+        </div>
+
+    </div>
+
+        <div class="field">
+            <label for="email">Email</label>
+            <input type="email" class="w-full" pInputText name="email" formControlName="email" placeholder="Enter Your email"/>
+            <small *ngIf="email.invalid && (email.dirty || email.touched)" class="p-error">
+                <div *ngIf="email.errors?.['email']">
+                    Enter valid Email id.
+                </div>
+                <div *ngIf="email.errors?.['required']">
+                    Email is Required.
+                </div>
+            </small>
+        </div>
+
+        <div class="field">
+            <label for="phoneNo">Phone No </label>
+            <input type="phoneNo" class="w-full" pInputText name="phoneNo" formControlName="phoneNo" placeholder="Enter Your Phone Number"/>
+            <small *ngIf="phoneNo.invalid && (phoneNo.dirty || phoneNo.touched)" class="p-error">
+                <div *ngIf="phoneNo.errors?.['phoneNo']">
+                    Enter valid phone Number.
+                </div>
+                <div *ngIf="phoneNo.errors?.['required']">
+                    phoneNo is Required.
+                </div>
+            </small>
+        </div>
+
+
+
+        <div class="field">
+            <label for="password">Password  </label>
+            <input type="password" class="w-full" pInputText name="password" formControlName="password" placeholder="Enter Your Password"/>
+
+            <small *ngIf="password.invalid && ( password.dirty || password.touched)" class="p-error">
+                <div *ngIf="password.errors?.['required']">
+                    password is Required.
+                </div>
+
+            </small>
+        </div>
+
+        <div class="field">
+            <label for="confirmPassword">Confirm Password </label>
+            <input type="Password" class="w-full" pInputText name="confirmPassword" formControlName="confirmPassword" placeholder="Confirm Password"/>
+
+            <small *ngIf="confirmPassword.invalid && ( confirmPassword.dirty || confirmPassword.touched)" class="block p-error">
+
+                <div *ngIf="confirmPassword.errors?.['required']">
+                    password is Required.
+                </div>
+
+            </small>
+
+            <small class="block p-error" *ngIf="registerForm.errors?.['passwordMismatch'] && confirmPassword.valid && password.valid" >
+                password should match.
+            </small>
+            
+    </div>
+        <p-button label="Register" type="submit" [loading]="isloading" styleClass="w-full" [disabled]="registerForm.invalid"></p-button>
+        
+        <div class="mt-3">
+            Already a User? <a routerLink="/login">LogIn</a>.
+        </div>
+    </p-card>
+    
+</form>

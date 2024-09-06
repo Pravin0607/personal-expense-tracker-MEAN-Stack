@@ -1,0 +1,104 @@
+<p-card header="Profile Management" styleClass="text-center flex justify-content-center">
+    <form action="" class="flex flex-column gap-3 text-left" [formGroup]="updateForm">
+        
+        <div class="md:flex md:gap-4">
+            <div class="field">
+                <label for="firstName">First Name  </label>
+                <input type="text" class="w-full" pInputText name="firstName" formControlName="firstName" placeholder="Enter Your First Name" maxlength="20"/>
+                <small *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="p-error">
+                    <div *ngIf="firstName.errors?.['required']">
+                        First Name is Required.
+                    </div>
+                </small>
+            </div>
+    
+            <div class="field">
+                <label for="lastName">Last Name  </label>
+                <input type="text" class="w-full" pInputText name="lastName" formControlName="lastName" placeholder="Enter Your Last Name" maxlength="20"/>
+                <small *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="p-error">
+                    <div *ngIf="lastName.errors?.['required']">
+                        Last Name is Required.
+                    </div>
+                </small>
+            </div>
+        </div>
+    
+            <div class="field">
+                <label for="email">Email</label>
+                <input type="email" class="w-full" pInputText name="email" formControlName="email" placeholder="Enter Your email"/>
+                <small *ngIf="email.invalid && (email.dirty || email.touched)" class="p-error">
+                    <div *ngIf="email.errors?.['email']">
+                        Enter valid Email id.
+                    </div>
+                    <div *ngIf="email.errors?.['required']">
+                        Email is Required.
+                    </div>
+                </small>
+            </div>
+            <div class="field">
+                <label for="Phone No">Phone No </label>
+                <input type="number" class="w-full" pInputText name="phoneNo" formControlName="phoneNo" placeholder="Enter Your Phone Number."/>
+                <small *ngIf="phoneNo.invalid && (phoneNo.dirty || phoneNo.touched)" class="p-error">
+                    <div *ngIf="phoneNo.errors?.['phoneNo']">
+                        Enter valid phone Number.
+                    </div>
+                    <div *ngIf="phoneNo.errors?.['required']">
+                        phone Number is Required.
+                    </div>
+                </small>
+            </div>
+    
+    
+            <div class="field">
+                <label for="password">Password  </label>
+                <input type="password" class="w-full" pInputText name="password" formControlName="password" placeholder="Enter Your Password"/>
+    
+                <small *ngIf="password.invalid && ( password.dirty || password.touched)" class="p-error">
+                    <div *ngIf="password.errors?.['required']">
+                        password is Required.
+                    </div>
+    
+                </small>
+            </div>
+    
+            <div class="field">
+                <label for="confirmPassword">Confirm Password </label>
+                <input type="Password" class="w-full" pInputText name="confirmPassword" formControlName="confirmPassword" placeholder="Confirm Password"/>
+    
+                <small *ngIf="confirmPassword.invalid && ( confirmPassword.dirty || confirmPassword.touched)" class="block p-error">
+    
+                    <div *ngIf="confirmPassword.errors?.['required']">
+                        password is Required.
+                    </div>
+    
+                </small>
+    
+                <small class="block p-error" *ngIf="updateForm.errors?.['passwordMismatch'] && confirmPassword.valid && password.valid" >
+                    password should match.
+                </small>
+                
+        </div>
+        <div class="grid dir-col sm-dir-row">
+            <div class="col">
+                <p-button label="Delete Profile" [loading]="deleteloading" severity="danger" styleClass="w-full" (onClick)="showModal()"></p-button>
+            </div>
+            <div class="col">
+                <p-button label="Update Profile" [loading]="isloading" type="submit" styleClass="w-full" [disabled]="updateForm.invalid" (onClick)="updateUser()"></p-button>
+            </div>
+        </div>
+
+    </form>
+</p-card>
+
+
+<!-- primeng modal for confirm user delete -->
+
+<p-dialog header="Delete Profile" [(visible)]="display" [modal]="true" [closable]="false" [responsive]="true" [style]="{maxWidth: '300px'}" [baseZIndex]="10000">
+    <p-footer>
+        <div class="flex justify-content-between">
+            <p-button label="Yes" severity="danger" icon="pi pi-check" (onClick)="deleteUser()" class="p-button-text"></p-button>
+            <p-button label="No" icon="pi pi-times" (onClick)="display=false" class="p-button-text"></p-button>
+        </div>
+    </p-footer>
+    <p>Are you sure you want to delete your profile?</p>
+</p-dialog>

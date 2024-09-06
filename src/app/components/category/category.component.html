@@ -1,0 +1,77 @@
+<div class="flex flex-1 flex-column gap-2">
+    <p-card header="Category Management" styleClass="text-center flex justify-content-center bg-purple-300">
+            <form [formGroup]="categoryForm" class="w-full flex" (ngSubmit)="addCategory()">
+            <div class="flex flex-column md:flex-row gap-2">
+                <div class="field align-items-center">
+                    <input type="text" class="w-full" pInputText name="email" formControlName="category" placeholder="Enter Category"/>
+                </div>
+
+                <div>
+                    <!-- Change type to "submit" -->
+                    <p-button label="Add Category" [loading]="isloading" type="submit" styleClass="w-full"></p-button>        
+                </div>
+            </div>        
+        </form>
+        </p-card>
+        <p-card subheader="Categories">
+            <p-table [value]="categories" dataKey="id" [scrollable]="true" scrollHeight="290px" [tableStyle]="{'width': '100%'}" styleClass="p-datatable-striped p-datatable-sm">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width:10%">Sr.No</th>
+                        <th style="width:70%;">Category</th>
+                        <th style="width:20%">Action</th>
+                    </tr>                    
+                </ng-template>
+
+                <ng-template pTemplate="body" let-category let-i="rowIndex">
+                    <tr>
+                        <td>{{i+1}}</td>
+                        <td>{{category.category | titlecase}}</td>
+                        <td>
+                            <div class="flex justify-content-center gap-2">
+                                <p-button label="Edit" (click)="showDialog1(category.id)" icon="pi pi-pencil" iconPos="left" styleClass="p-button-warning p-button-sm"></p-button>
+                                <p-button label="Delete" (click)="showDialog2(category.id)" icon="pi pi-trash" iconPos="left" styleClass="p-button-danger p-button-sm"></p-button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+
+            </p-table>
+        </p-card>
+    </div>
+
+
+
+<!-- modals -->
+
+<p-dialog [(visible)]="visible1" [modal]="true" header="Edit Category">
+    <ng-template pTemplate="headless">
+        <div class="flex flex-column px-8 py-5 gap-4 bg-purple-500" style="border-radius: 12px;">
+            <h1>Edit Category <b class="text-red-900 underline">{{categories[Cid-1].category}}</b> </h1>
+
+            <form action="" [formGroup]="updateCategory">
+                <div class="field">
+                    <input type="text" class="w-full" pInputText name="email" formControlName="CategoryUpdate" placeholder="Enter Category"/>
+                </div>
+            </form>
+            <div class="flex align-items-center gap-2">
+                <!-- show the update button only when the CategoryUpdate is dirty  -->
+
+                <p-button label="Update" (click)="updateCategory1()" [text]="true" styleClass="w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10 bg-green-600" class="w-full" [disabled]="!updateCategory.get('CategoryUpdate')?.dirty"></p-button>
+                <p-button label="Cancel" (click)="closeDialog1()" [text]="true"  styleClass="w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10" class="w-full"></p-button>
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>
+
+<p-dialog [modal]="true" [(visible)]="visible2" header="Confirm Deletion">
+    <ng-template pTemplate="headless">
+        <div class="flex flex-column px-8 py-5 gap-4" style="border-radius: 12px; background-image: radial-gradient(circle at left top, var(--primary-400), var(--primary-700))">
+            <h1>Edit Category <b class="text-red-900 underline">{{categories[Cid-1].category}}</b> </h1>
+            <div class="flex align-items-center gap-2">
+                <p-button label="Confirm Delete" (click)="deleteCategory2()" [text]="true" styleClass="w-full text-primary-50 border-1 border-white-alpha-30 bg-red-600" class="w-full" ></p-button>
+                <p-button label="Cancel" (click)="closeDialog2()" [text]="true"  styleClass="w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10" class="w-full"></p-button>
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>

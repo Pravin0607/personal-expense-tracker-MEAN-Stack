@@ -1,0 +1,7 @@
+<div class="p-2 bg-purple-400 min-h-screen max-h-full">
+  <h1 *ngIf="router.url === '/home' || router.url === '/' ||router.url === '/login' || router.url === '/register'" [style]="{textAlign:'center'}">
+    Personal Expense Tracker
+  </h1>
+  <router-outlet></router-outlet>
+  <p-toast position="bottom-center" key="bc"></p-toast>
+</div>

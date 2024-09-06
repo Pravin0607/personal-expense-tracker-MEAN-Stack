@@ -1,0 +1,12 @@
+<form [formGroup]="dayForm" class="p-grid">
+        <div class="card flex md:justify-content-center flex-wrap  md:gap-3 p-fluid p-2">
+        <div class="align-self-start flex flex-column  md:flex-row justify-content-center align-items-start md:align-items-center gap-3 ">
+            <label for="buttondisplay" class="font-bold block mb-2"> Select a Date </label>
+            <p-calendar  formControlName="date" placeholder="DD-MM-YYYY" dateFormat="dd-mm-yy"  [showIcon]="true" inputId="buttondisplay"></p-calendar>
+            <p-button (click)="showReport()" [loading]="isloading" [disabled]="!(dayForm.valid && dayForm.dirty)">Show Report</p-button>
+        </div>
+    </div>
+</form>
+
+
+<app-piechart [pieChartData]="{labels,dataset}" [isDataAvailable]="isDataAvailable" [tableData]="expenses"></app-piechart>
