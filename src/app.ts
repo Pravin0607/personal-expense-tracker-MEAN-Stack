@@ -7,7 +7,9 @@ import { ReportRouter } from "./routes/reports.routes";
 
 const app=express();
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+ origin: 'https://personalexpensetrackerangular.onrender.com'
+}))
 app.use(express.urlencoded())
 
 app.use('/api/user',userRouter);
